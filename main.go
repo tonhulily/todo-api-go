@@ -4,12 +4,14 @@ import (
 	"net/http"
 	"strconv" // Chuyển đổi chuỗi sang số nguyên (ID)
 	"sync"
-
+	"log"
+	"os"
 	"todo-api-go/models"
 
 	"github.com/gin-contrib/cors" // Import thư viện CORS
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 // In-memory "database"
@@ -20,11 +22,24 @@ var (
 )
 
 func main() {
+	// Tải các biến môi trường từ file .env.
+	// Nếu không có file .env, chương trình vẫn chạy bình thường.
+	err := godotenv.Load()
+	if err != nil {
+		log.Println("Không tìm thấy file .env, sử dụng biến môi trường hệ thống.")
+	}
+
 	router := gin.Default()
 
+	// Sử dụng biến môi trường cho AllowOrigins
+	frontendURL := os.Getenv("FRONTEND_URL")
+	if frontendURL == "" {
+		// Giá trị mặc định khi chạy local
+		frontendURL = "http://localhost:5173"
+	}
 	// Cấu hình CORS middleware
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"https://todo-list-frontend-1.netlify.app"} // Cho phép frontend truy cập
+	config.AllowOrigins = []string{frontendURL} // Cho phép frontend truy cập
 	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 	config.AllowHeaders = []string{"Origin", "Content-Type"}
 	router.Use(cors.New(config))
@@ -35,7 +50,12 @@ func main() {
 	router.PUT("/tasks/:id", updateStatus)
 	router.DELETE("/tasks/:id", deleteTask)
 
-	router.Run(":8080")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	router.Run(":" + port)
 }
 
 // @Success 201 {object} map[string]int "Trả về ID của công việc vừa tạo"
