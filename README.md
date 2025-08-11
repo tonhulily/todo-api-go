@@ -1,4 +1,4 @@
-# Ứng dụng To-do Backend (Go)
+# Ứng dụng Todo-list Backend (Go)
 
 Đây là mã nguồn cho phần backend của ứng dụng Todo-list, được xây dựng bằng Go và Gin Framework. Backend này cung cấp các API để quản lý danh sách công việc.
 
@@ -8,28 +8,22 @@
 
 * `POST /tasks`: Tạo một công việc mới.
 * `GET /tasks`: Lấy toàn bộ danh sách công việc.
-* `PUT /tasks/:id`: Cập nhật trạng thái của một công việc.
-* `DELETE /tasks/:id`: Xóa một công việc.
-
+* `PUT /tasks/:id`: Cập nhật trạng thái của một công việc (ví dụ: `PUT /tasks/123` để cập nhật công việc có ID là 123).
+* `DELETE /tasks/:id`: Xóa một công việc khỏi danh sách (ví dụ: `DELETE /tasks/123`).
+> **Lưu ý:** Khi triển khai trên **Render**, bạn sẽ cấu hình các biến môi trường này trực tiếp trên nền tảng cloud.
 ---
 
-## Cấu hình Biến Môi Trường
+## Cấu hình biến môi trường
 
-Để chạy ứng dụng, bạn cần sử dụng các biến môi trường.
+Để ứng dụng hoạt động, bạn cần có một file `.env` chứa các biến môi trường sau:
 
-1.  **Cài đặt thư viện `godotenv`:**
-    ```bash
-    go get [github.com/joho/godotenv](https://github.com/joho/godotenv)
-    ```
-
-2.  **Tạo file `.env`:**
-    Trong thư mục gốc của dự án, hãy tạo một file tên là `.env` với nội dung sau:
+* **Tạo file `.env`**: Ở thư mục gốc của dự án, hãy tạo một file tên là `.env` và thêm nội dung này vào:
     ```ini
     PORT=8080
     FRONTEND_URL=http://localhost:5173
     ```
 
-> **Lưu ý:** Khi triển khai trên **Render**, bạn sẽ cấu hình các biến môi trường này trực tiếp trên nền tảng cloud.
+> **Lưu ý:** Nếu bạn triển khai ứng dụng trên **Render**, bạn chỉ cần cài đặt biến môi trường **`FRONTEND_URL`** với giá trị là URL của frontend đã deploy.
 
 ---
 
