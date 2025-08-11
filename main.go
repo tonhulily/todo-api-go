@@ -24,7 +24,7 @@ func main() {
 
 	// Cấu hình CORS middleware
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:5173"} // Cho phép frontend truy cập
+	config.AllowOrigins = []string{"https://todo-list-frontend-1.netlify.app"} // Cho phép frontend truy cập
 	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 	config.AllowHeaders = []string{"Origin", "Content-Type"}
 	router.Use(cors.New(config))
